@@ -1,10 +1,13 @@
 const express = require("express");
 const app = express();
 const path = require("path");
-const PORT = process.env.PORT || 3500;
+const PORT = process.env.PORT || 3500; // hosts website on port 3500
 
-app.use("/", express.static(path.join(__dirname, "/public")));
+// define how to process JSON
+app.use(express.json())
+// TODO: add in middleware
 
+app.use("/", express.static(path.join(__dirname, "public"))); 
 app.use("/", require("./routes/root"));
 
 app.all("*", (req, res) => {
