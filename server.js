@@ -1,13 +1,15 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+const { logger } = require("./middleware/logger");
 const PORT = process.env.PORT || 3500; // hosts website on port 3500
 
+app.use(logger);
 // define how to process JSON
-app.use(express.json())
+app.use(express.json());
 // TODO: add in middleware
 
-app.use("/", express.static(path.join(__dirname, "public"))); 
+app.use("/", express.static(path.join(__dirname, "public")));
 app.use("/", require("./routes/root"));
 
 app.all("*", (req, res) => {
