@@ -3,12 +3,18 @@ const app = express();
 const path = require("path");
 const { logger } = require("./middleware/logger");
 const errorHandler = require("./middleware/errorHandler");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+const corsOptions = require("./config/corsOptions");
 const PORT = process.env.PORT || 3500; // hosts website on port 3500
 
 app.use(logger);
+// make everything in api available to public, TODO: add security
+app.use(cors(corsOptions));
 // define how to process JSON
 app.use(express.json());
-// TODO: add in middleware
+// define how to parse cookies
+app.use(cookieParser());
 
 app.use("/", express.static(path.join(__dirname, "public")));
 app.use("/", require("./routes/root"));
